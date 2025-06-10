@@ -1,65 +1,24 @@
-import { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Login from './components/Login'
+import SignUp from './components/SignUp'
+import MainPage from './components/MainPage'
 import './App.css'
-import { getTransactions, addTransaction, deleteTransaction } from './api'
-import Form from './components/Form'
-
-export interface Transactions {
-  id: number,
-  title: string,
-  amount: number,
-  category: string,
-  type: string,
-}
 
 function App() {
 
-  const [transactions, setTransactions] = useState<Transactions[]>([])
   
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getTransactions()
-        setTransactions(data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    fetchData()
-  }, [])
-
-  async function getNewTransactionFromForm(data: Omit<Transactions, "id">){
-    try{
-      const response = await addTransaction(data);
-      setTransactions(prev => [...prev, response]);
-    }  catch (error) {
-      console.error("Failed to add transaction:", error)
-    }
-  }
-
-  const handleDelete = (id: number) => {
-    try{
-      deleteTransaction(id)
-      setTransactions()
-    }
-  }
-
   return (
-    <div>
-      <h1>Working</h1>
-      {transactions.map(t => (
-        <div key={t.id}>
-          <ul>
-            <li>{t.title}</li>
-            <li>{t.amount}</li>
-          </ul>
-          <button onClick={() => handleDelete(t.id)} ></button>
-        </div>
-        )
-      )}
-      <Form onAddTransaction={getNewTransactionFromForm}/>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<MainPage />} />
+        
+      </Routes>
+    </Router>
   )
 }
 
 export default App
+
+
