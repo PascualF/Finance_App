@@ -52,8 +52,6 @@ export default function MainPage() {
     return (
         <div>
         <Header />
-
-
             {transactions.map(t => (
             <div key={t.id} className="flex flex-row justify-between items-center bg-gray-100 p-4 mb-2 rounded">
                 <ul>

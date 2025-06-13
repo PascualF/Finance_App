@@ -11,13 +11,40 @@ const JWT_SECRET = 'my_secret_key'; // Added to the .env file and keep it secret
 const JWT_EXPIRATION = '1h'; // Added to the .env file and keep it secretier
 const saltRounds = 10;
 
-app.use(cors())
+// Middleware
+app.use(cors()) // Check for adjusting Frontend
 app.use(express.json());
 
+// Auth middleware to verify JWT tokens
+interface AuthRequest extends Request {
+  userId?: number
+}
 
-app.get('/api/transactions', async (req, res) => {
-  const response = await prisma.transaction.findMany()
-  res.json(response)
+// Auth token JWT - middleware
+const authenticateToken = (req: AuthRequest, res: Response, next: Function) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]
+
+  if(!token) {
+    res.status(401).json({error : 'Access token required'})
+    return 
+  }
+
+  jwt.verify(token, JWT_SECRET, (err: any, decoded: any) => {
+    if(err) {
+      return res.status(403).json({error: 'Invalid or expired token'})
+    }
+    req.userId = decoded.userId;
+    next()
+  })
+}
+
+app.get('/api/transactions', authenticateToken, async (req, res) => {
+  try {
+    const response = await prisma.transaction.findMany() // userIQ will be added here
+    res.json(response)
+  }
+  
 });
 
 app.post('/api/transactions', async (req, res) => {
