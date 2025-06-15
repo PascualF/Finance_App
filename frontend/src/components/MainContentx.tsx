@@ -48,7 +48,7 @@ export default function MainContent() {
     return (
         <div>
             {transactions.map(t => (
-                <div key={t.id} className="flex flex-row justify-between items-center bg-gray-100 p-4 mb-2 rounded">
+                <div key={t.id} className="flex flex-row justify-between items-center bg-blue-100 p-4 mb-2 rounded">
                     <ul>
                     <li>{t.title}</li>
                     <li>{t.amount}</li>

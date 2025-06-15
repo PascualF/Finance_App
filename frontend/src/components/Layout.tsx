@@ -20,7 +20,7 @@ export default function Layout() {
             {/* Main Content below */}
             <div className='flex flex-col border-solid w-full max-w-screen'>
                 <Header />
-                <main className='flex-1 overflow-y-auto max-w-4xl mx-auto px-4'>
+                <main className='flex-1 mx-2 bg-blue-100 px-4'>
                     <MainContent />
                 </main>
                 <Footer />
