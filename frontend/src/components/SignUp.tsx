@@ -1,6 +1,6 @@
 import React, { useState} from "react"
-import { Link } from "react-router-dom"
-import { useAuth } from "../useAuth" 
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../useAuth"
 
 export default function SignUp() {
 
@@ -8,6 +8,7 @@ export default function SignUp() {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [error, setError] = useState("")
+    const navigate = useNavigate()
 
     const {signup, isLoading} = useAuth()
 
@@ -34,6 +35,9 @@ export default function SignUp() {
             const success = await signup(email, password)
             if(!success) {
                 setError("Sign up failed. User might already exist.")
+            }
+            if(success){
+                navigate("/")
             }
         } catch (error) {
             console.error(error)

@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../useAuth"
 
 export default function Login() {
@@ -7,7 +7,7 @@ export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
-
+    const navigate = useNavigate()
 
     const {login, isLoading} = useAuth()
 
@@ -24,6 +24,9 @@ export default function Login() {
             const success = await login(email, password)
             if(!success) {
                 setError("Invalid email or password.")
+            }
+            if(success) {
+                navigate("/")
             }
         } catch(error) {
             console.error(error)

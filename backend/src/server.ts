@@ -8,11 +8,12 @@ import jwt from 'jsonwebtoken';
 const app = express();
 const prisma = new PrismaClient()
 const JWT_SECRET = 'my_secret_key'; // Added to the .env file and keep it secretier
-const JWT_EXPIRATION = '1h'; // Added to the .env file and keep it secretier
-const saltRounds = 10;
+const JWT_EXPIRATION = '1d'; // Added to the .env file and keep it secretier
+const saltRounds = 10; // Added to the .env file and keep it secretier
 
 // Middleware
-app.use(cors()) // Check for adjusting Frontend
+// Check for adjusting Frontend?? Saw it somwhere but can't find again
+app.use(cors({ origin: 'http://localhost:5173', credentials: true})) 
 app.use(express.json());
 
 // Auth middleware to verify JWT tokens
@@ -22,7 +23,8 @@ interface AuthRequest extends Request {
 
 // Auth token JWT - middleware
 const authenticateToken = (req: AuthRequest, res: Response, next: Function) => {
-  const authHeader = req.headers['authorization'];
+  console.log(req.headers.authorization)
+  const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1]
 
   if(!token) {
@@ -39,44 +41,68 @@ const authenticateToken = (req: AuthRequest, res: Response, next: Function) => {
   })
 }
 
-app.get('/api/transactions', authenticateToken, async (req, res) => {
+app.get('/api/transactions', authenticateToken, async (req: AuthRequest, res: Response) => {
   try {
-    const response = await prisma.transaction.findMany() // userIQ will be added here
+    const response = await prisma.transaction.findMany({
+      where: { userId: req.userId}
+    }) // userID will be added here
     res.json(response)
+  } catch (error) {
+    console.error('Error fetching all the transactions: ', error)
+    res.status(500).json({error: 'Internal server error'})
   }
-  
 });
 
-app.post('/api/transactions', async (req, res) => {
-  const { title, amount, category, type} = req.body.transaction
-  const transaction = await prisma.transaction.create({
+// TS interface transaction inpu type
+interface TransactionInput {
+  title: string;
+  amount: number;
+  category: string;
+  type: string;
+}
+
+app.post('/api/transactions', authenticateToken, async (req: AuthRequest, res: Response) => {
+  const { title, amount, category, type}: TransactionInput = req.body.transaction
+  try {
+    const transaction = await prisma.transaction.create({
     data: {
       title: title,
       amount: amount,
       category: category,
-      type: type
+      type: type,
+      userId: req.userId
     }
   })
+
   res.json(transaction)
+  } catch (error) {
+    res.status(500).json({error: 'Internal server error'})
+  }
+  
 })
 
-app.delete('/api/transactions/:id', async (req, res) => {
-  console.log(req.params)
-  const {id} = req.params
-  const idToNumber = Number(id)
-  const deleteTransaction = await prisma.transaction.delete({
+app.delete('/api/transactions/:id', authenticateToken, async (req: AuthRequest, res: Response) => {
+  try {
+    const idToNumber = Number(req.params.id)
+    const deleteTransaction = await prisma.transaction.delete({
     where: {
       id: idToNumber
     }
   })
   res.json(deleteTransaction)
+  } catch (error) {
+    console.error('Error deleting transaction:', error)
+    res.status(500).json({error: 'Internal server error'})
+  }
 })
 
 // Login and Signup routes
 app.post('/api/signup', async (req: Request, res: Response) => {
   try{
-    const { email, password, name} = req.body;
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    const { email, password} = req.body;
+    const existingUser = await prisma.user.findUnique({ 
+      where: { email }
+    });
 
     if(existingUser) {
       res.status(400).json({error: "User already exists"});
@@ -89,18 +115,18 @@ app.post('/api/signup', async (req: Request, res: Response) => {
     const newUser = await prisma.user.create({
       data: {
         email,
-        name,
         password: hashPassword
       }
     })
 
     const token = jwt.sign({ userId: newUser.id }, JWT_SECRET, { expiresIn: JWT_EXPIRATION });
-    
+
     res.status(201).json({
       userId: newUser.id, 
-      email: newUser.email, 
-      name: newUser.name
+      email: newUser.email,
+      token
     });
+
   } catch (error) {
     console.error("Error during signup:", error);
     res.status(500).json({error: "Internal server error"});
@@ -126,7 +152,12 @@ app.post('/api/login', async (req: Request, res: Response) => {
     // Generate JWT token
     const token = jwt.sign({ userId: existingUser.id }, JWT_SECRET, { expiresIn: JWT_EXPIRATION });
 
-    res.json({token})
+    console.log(token)
+
+    res.json({
+      userId: existingUser.id,
+      email: existingUser.email,
+      token})
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({error: "Internal server error"});

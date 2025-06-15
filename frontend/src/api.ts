@@ -1,9 +1,17 @@
 const API = `http://localhost:4000`
-import { Transactions } from "./App"
+import { Transactions } from "./components/Layout"
+const token = localStorage.getItem('tokenFinanceApp')
 
 export const getTransactions = async () => {
-    const response = await fetch(`${API}/api/transactions`)
-    
+    /* console.log(token) */
+    const response = await fetch(`${API}/api/transactions`, {
+        method: "GET",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
     }
@@ -14,7 +22,10 @@ export const getTransactions = async () => {
 export const addTransaction = async (transaction: Omit<Transactions, "id">) => {
     const response = await fetch(`${API}/api/transactions`, {
         method: "POST",
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({transaction})
     })
 
@@ -24,7 +35,10 @@ export const addTransaction = async (transaction: Omit<Transactions, "id">) => {
 export const deleteTransaction = async (id: number) => {
     try{
         const response = await fetch(`${API}/api/transactions/${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         })
 
         if(!response.ok) {

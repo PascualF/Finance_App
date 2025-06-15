@@ -1,53 +1,81 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AuthContext, AuthContextType } from "../AuthContext";
+const API = `http://localhost:4000`
 
 interface AuthProviderProps {
     children: React.ReactNode;
 }
 
-// Simple Mock auth -> Simulates authentication
-const MOCK_USERS = new Map<string, string>(); 
-
 export function AuthProvider({ children }: AuthProviderProps ) {
     const [user, setUser] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+
+    // check if token exists
+    useEffect(() => {
+        const token = localStorage.getItem('tokenFinanceApp')
+        if (token) {
+            setUser('existing user')
+        } else {
+            setUser(null)
+        }
+        setIsLoading(false)
+    }, [])
 
     const login = async (email: string, password: string): Promise<boolean> => {
         setIsLoading(true);
         try{
-            // Simulate the API call
+            // Optional simulation
             await new Promise(resolve => setTimeout(resolve, 1000))
+            
+            const response = await fetch(`${API}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
 
-            // Check if user exists and password matches
-            const storedPassword = MOCK_USERS.get(email);
-            if (storedPassword && storedPassword === password) {
-                setUser(email);
-                return true
+            if(!response.ok) {
+                return false
             }
-            return false
+            const data = await response.json()
+            localStorage.setItem('tokenFinanceApp', data.token)
+
+            console.log(data)
+
+            setUser(email)
+
+            return true
+
         } finally {
             setIsLoading(false)
         }
     }
 
-    const signup = async (email: string, password: string): Promise<boolean> => {
+    const signup = async (email: string, password: string): Promise <boolean>=> {
         setIsLoading(true)
         try {
-            await new Promise( resolve => setTimeout(resolve, 1000))
+            const response = await fetch(`${API}/api/signup`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({email, password})
+            })
 
-            if( MOCK_USERS.has(email)){
-                return false // user laready exists
+            if(!response.ok) {
+                return false
             }
 
-            MOCK_USERS.set(email, password);
-            setUser(email);
+            const data = await response.json()
+
+            localStorage.setItem('tokenFinanceApp', data.token)
+            
             return true
+
         } finally {
             setIsLoading(false)
         }
     }
 
     const logout = () => {
+        localStorage.removeItem('tokenFinanceApp')
         setUser(null)
     }
 
