@@ -48,40 +48,40 @@ export default function SignUp() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 rounded shadow-md w-96">
-                <h2 className="text-2xl font-bold mb-6 text-center">SignUp</h2>
+                <h2 className="text-2xl font-bold mb-6 text-black text-center">Sign Up</h2>
                 <form onSubmit={handleSubmitSignup}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2" htmlFor="email">Email</label>
+                        <label className="block text-sm font-medium text-black mb-2" htmlFor="email">Email</label>
                         <input
                             type="email"
                             id="email"
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 text-black rounded focus:outline-none focus:ring focus:ring-blue-500"
                             required
                             disabled={isLoading}
                         />
                     </div>
                     <div className="mb-6">
-                        <label className="block text-sm font-medium mb-2" htmlFor="password">Password</label>
+                        <label className="block text-sm font-medium text-black mb-2" htmlFor="password">Password</label>
                         <input
                             type="password"
                             id="password"
                             value={password}
                             onChange={(event) => setPassword(event.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 text-black rounded focus:outline-none focus:ring focus:ring-blue-500"
                             required
                             disabled={isLoading}
                         />
                     </div>
                     <div className="mb-6">
-                        <label className="block text-sm font-medium mb-2" htmlFor="password">Confirm Password</label>
+                        <label className="block text-sm font-medium text-black mb-2" htmlFor="password">Confirm Password</label>
                         <input
                             type="password"
                             id="confirm_password"
                             value={confirmPassword}
                             onChange={(event) => setConfirmPassword(event.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 text-black rounded focus:outline-none focus:ring focus:ring-blue-500"
                             required
                             disabled={isLoading}
                         />
@@ -99,9 +99,9 @@ export default function SignUp() {
                         {isLoading ? 'Signing in...' : 'Sign Up'}
                     </button>
                 </form>
-                <p className="mt-4 text-center text-sm">
+                <p className="mt-4 text-center text-black text-sm">
                     Already have an account?
-                        <Link to="/login" className="hover:underline mx-4">
+                        <Link to="/login" className="text-blue-900 hover:underline mx-2">
                             Login Now
                         </Link>
                 </p>

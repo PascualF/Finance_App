@@ -4,6 +4,7 @@ import SignUp from './components/SignUp'
 import Layout from './components/Layout'
 import './App.css'
 import { useAuth } from './useAuth'
+import ContentArea from './components/ContentArea'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }){
   const {user, isLoading} = useAuth()
@@ -22,11 +23,16 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+
+        {/* Protected layout + children, everyone is protected */}
         <Route path='/' element={
           <ProtectedRoute>
             <Layout />
           </ProtectedRoute>
-        } />
+        } >
+        {/* Nested pages inside layout's Content Area */}
+        <Route index element={<ContentArea />} />
+        </Route>
       </Routes>
     </Router>
   )

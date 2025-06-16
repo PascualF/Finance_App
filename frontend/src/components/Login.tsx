@@ -37,28 +37,28 @@ export default function Login() {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 rounded shadow-md w-96">
-                <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+                <h2 className="text-2xl text-black font-bold mb-6 text-center">Login</h2>
                 <form onSubmit={handleSubmitLogin}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2" htmlFor="email">Email</label>
+                        <label className="block text-sm text-black font-medium mb-2" htmlFor="email">Email</label>
                         <input
                             type="email"
                             id="email"
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded text-black focus:outline-none focus:ring focus:ring-blue-500"
                             required
                             disabled={isLoading}
                         />
                     </div>
                     <div className="mb-6">
-                        <label className="block text-sm font-medium mb-2" htmlFor="password">Password</label>
+                        <label className="block text-sm text-black font-medium mb-2" htmlFor="password">Password</label>
                         <input
                             type="password"
                             id="password"
                             value={password}
                             onChange={(event) => setPassword(event.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded text-black focus:outline-none focus:ring focus:ring-blue-500"
                             required
                             disabled={isLoading}
                         />
@@ -75,9 +75,9 @@ export default function Login() {
                     >
                         {isLoading ? "Logging in..." : "Login"}
                     </button>
-                    <p className="mt-4 text-center text-sm">
+                    <p className="mt-4 text-center text-black text-sm">
                         No account?
-                            <Link to="/signup" className="hover:underline mx-4">
+                            <Link to="/signup" className="text-blue-900 hover:underline mx-1">
                                  SignUp Now
                             </Link>
                     </p>

@@ -1,7 +1,7 @@
+import { Outlet, useLocation} from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Footer from './Footer'
 import Header from './Header'
-import MainContent from './MainContentx'
 
 export interface Transactions {
   id: number,
@@ -13,15 +13,17 @@ export interface Transactions {
 
 export default function Layout() {
 
+    const location = useLocation()
+
     return (
         <div className='flex h-screen border-solid w-full max-w-screen'>
             <Sidebar />
 
             {/* Main Content below */}
             <div className='flex flex-col border-solid w-full max-w-screen'>
-                <Header />
-                <main className='flex-1 mx-2 bg-blue-100 px-4'>
-                    <MainContent />
+                <Header currentRoute={location.pathname}/>
+                <main className='flex-1 bg-blue-100 px-4'>
+                    <Outlet /> {/* Will render routes content area and other compoentns to be shonw in the 'dashboard' */}  
                 </main>
                 <Footer />
             </div>

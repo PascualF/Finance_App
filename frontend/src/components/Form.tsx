@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import { Transactions } from "./MainContentx";
+import { Transactions } from "./ContentArea";
 
 interface FormProps {
     onAddTransaction: (data: Omit<Transactions, "id">) => void;
@@ -66,12 +66,13 @@ function Form({onAddTransaction} : FormProps) {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <label> 
+                <label className="text-black"> 
                     Transaction
                     <input
                         type="text"
                         name="title"
                         placeholder={errors.title ? errors.title : 'Transaction' }
+                        className="text-black"
                         value={state.title}
                         onChange={handleChange}
                     />
@@ -82,15 +83,17 @@ function Form({onAddTransaction} : FormProps) {
                         name="amount"
                         value={state.amount}
                         placeholder={errors.amount ? errors.amount : '0' }
+                        className="text-black"
                         onChange={handleChange}
                     />
                 </label>
                 <label>
-                <input
+                    <input
                         type="text"
                         name="category"
                         value={state.category}
                         placeholder={errors.amount ? errors.amount : 'Category' }
+                        className="text-black"
                         onChange={handleChange}
                     />
                 </label>
@@ -99,6 +102,7 @@ function Form({onAddTransaction} : FormProps) {
                         name="type"
                         value={state.type}
                         onChange={handleChange}
+                        className="text-black"
                     >
                         <option value="Income">Income</option>
                         <option value="Expense">Expense</option>
