@@ -20,12 +20,13 @@ export default function Goals() {
     ]
 
     return (
-        <div>
+        <div className="border-black border">
             <h2 className="text-xl font-semibold mb-4">Your Goals</h2>
             <div>
                 {goals.map((goal) => (
                     <GoalsCard key={goal.goalId} goalContent={goal}/>
                 ))}
+                <p>Adding Goal</p>
                 {/* <AddGoalCard /> will be added here */}
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import { Transactions } from "./ContentArea";
+import { Transactions } from "./Transactions";
 
 interface FormProps {
     onAddTransaction: (data: Omit<Transactions, "id">) => void;
