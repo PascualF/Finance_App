@@ -1,4 +1,27 @@
-import GoalsCard from "./GoalsCard"
+import { PieChart, Pie, Cell} from "recharts"
+import {Swiper, SwiperSlide} from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css'
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+interface Data {
+    "name":string;
+    "value": number;
+}
+
+const dataFill: Data[] = [
+    {
+        "name": "Goal!",
+        "value": 250,
+    },
+    {
+        "name": "Current",
+        "value": 120,
+    }
+]
+
+const COLORS = ['#dc143c', '#82ca9d']
 
 export default function Goals() {
     // receive goals
@@ -20,15 +43,43 @@ export default function Goals() {
     ]
 
     return (
-        <div className="border-black border">
+        <div className="border-black border text-black">
             <h2 className="text-xl font-semibold mb-4">Your Goals</h2>
-            <div>
+            <Swiper
+                modules={[Navigation, Pagination]}
+                spaceBetween={20}
+                slidesPerView={1}
+                navigation
+                pagination={{ clickable: true}}
+            >
                 {goals.map((goal) => (
-                    <GoalsCard key={goal.goalId} goalContent={goal}/>
+                    <SwiperSlide key={goal.goalId}>
+                        <div className="p-4 bg-white rounded-2xl shadow-md h-full flex flex-col justify-between">
+                            <div className="mb-4">
+                                <p className="text-lg font-semibold mb-1">{goal.goalId}</p>
+                                <p className="text-gray-800">{goal.goalTitle}</p>
+                             </div>
+                            <PieChart width={70} height={70}>
+                                <Pie 
+                                    data={dataFill} 
+                                    dataKey="value" 
+                                    nameKey="name" 
+                                    cx="50%" 
+                                    cy="50%" 
+                                    outerRadius={30} 
+                                    fill="#82ca9d" 
+                                    endAngle={180} 
+                                >
+                                    {dataFill.map((_entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
+                                    ))}
+                                </Pie>
+                            </PieChart>
+                        </div>
+                    </SwiperSlide>
                 ))}
-                <p>Adding Goal</p>
-                {/* <AddGoalCard /> will be added here */}
-            </div>
+            </Swiper>
+            {/* <AddGoalCard /> will be added here */}
         </div>
     )
 }
