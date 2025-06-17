@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
 import {Trash2} from 'lucide-react'
-import { getTransactions, addTransaction, deleteTransaction } from '../api'
 import Form from './Form'
+import { useTransactions } from '../hooks/useTransactions'
 
 export interface Transactions {
   id: number,
@@ -13,36 +12,16 @@ export interface Transactions {
 
 export default function Transactions() {
 
-    const [transactions, setTransactions] = useState<Transactions[]>([])
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getTransactions()
-                setTransactions(data)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        fetchData()
-    }, [])
+    const {transactions, isLoading, add, remove } = useTransactions()
 
-    async function getNewTransactionFromForm(data: Omit<Transactions, "id">){
-        try{
-            const response = await addTransaction(data);
-            setTransactions(prev => [...prev, response]);
-        }  catch (error) {
-            console.error("Failed to add transaction:", error)
-        }
+    if (isLoading) return <div>Loading...</div>
+
+    async function handleAdd(data: Omit<Transactions, "id">){
+        await add(data)
     }
 
-    const handleDelete = (id: number) => {
-        try{
-            deleteTransaction(id)
-            setTransactions(prev => prev.filter(t => t.id !== id))
-        } catch (error) {
-            console.error("Failed to delete transaction:", error)
-        }
+    async function handleDelete(data: Transactions) {
+        await remove(data)
     }
 
     return (
@@ -52,14 +31,14 @@ export default function Transactions() {
                     <p>{transaction.title}</p>
                     <p>{transaction.amount}</p>
                     <button style={{color: 'white'}}
-                            onClick={() => handleDelete(transaction.id)} 
+                            onClick={() => handleDelete(transaction)} 
                         >
                             <Trash2 size={13}/>
                     </button>
                 </div>
                 )
             )}
-            <Form onAddTransaction={getNewTransactionFromForm}/>
+            <Form onAddTransaction={handleAdd}/>
         </div>
     )
 }

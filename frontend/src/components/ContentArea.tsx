@@ -1,11 +1,11 @@
 import Goals from "./Goals"
-import Transactions from "./Transactions"
+import RecentTransactions from "./RecentTransactions"
 
 export default function ContentArea() {
 
     return (
         <div>
-            <Transactions />
+            <RecentTransactions />
             <Goals />
         </div>
     )

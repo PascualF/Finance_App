@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AuthContext, AuthContextType } from "../AuthContext";
+import { AuthContext, AuthContextType } from "./AuthContext";
 const API = `http://localhost:4000`
 
 interface AuthProviderProps {

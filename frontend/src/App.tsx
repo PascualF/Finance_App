@@ -2,9 +2,10 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login'
 import SignUp from './components/SignUp'
 import Layout from './components/Layout'
-import './App.css'
-import { useAuth } from './useAuth'
+import './styles/App.css'
+import { useAuth } from './hooks/useAuth'
 import ContentArea from './components/ContentArea'
+import Transactions from './components/Transactions'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }){
   const {user, isLoading} = useAuth()
@@ -32,6 +33,7 @@ function App() {
         } >
         {/* Nested pages inside layout's Content Area */}
         <Route index element={<ContentArea />} />
+        <Route path='/transactions' element={<Transactions />} />
         </Route>
       </Routes>
     </Router>
