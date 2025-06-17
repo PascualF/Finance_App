@@ -1,5 +1,5 @@
 const API = `http://localhost:4000`
-import { Transactions } from "./components/Layout"
+import { Transaction } from "../context/types/TransactionType"
 const token = localStorage.getItem('tokenFinanceApp')
 
 export const getTransactions = async () => {
@@ -19,7 +19,7 @@ export const getTransactions = async () => {
     return response.json()
 }
 
-export const addTransaction = async (transaction: Omit<Transactions, "id">) => {
+export const addTransaction = async (transaction: Omit<Transaction, "id">) => {
     const response = await fetch(`${API}/api/transactions`, {
         method: "POST",
         headers: { 
