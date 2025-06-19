@@ -1,6 +1,7 @@
 import {Trash2} from 'lucide-react'
 import Form from './Form'
 import { useTransactions } from '../hooks/useTransactions'
+import {format} from 'date-fns'
 
 export interface Transactions {
   id: number,
@@ -8,6 +9,7 @@ export interface Transactions {
   amount: number,
   category: string,
   type: string,
+  transactionDate: string, // ISO date string
 }
 
 export default function Transactions() {
@@ -17,6 +19,7 @@ export default function Transactions() {
     if (isLoading) return <div>Loading...</div>
 
     async function handleAdd(data: Omit<Transactions, "id">){
+        console.log('Adding transaction:', data)
         await add(data)
     }
 
@@ -30,6 +33,7 @@ export default function Transactions() {
                 <div key={transaction.id} className="flex flex-row justify-between items-center bg-blue-100 text-black p-4 mb-2 rounded">
                     <p>{transaction.title}</p>
                     <p>{transaction.amount}</p>
+                    <p>{format(new Date(transaction.transactionDate), "MMM-dd")}</p>
                     <button style={{color: 'white'}}
                             onClick={() => handleDelete(transaction)} 
                         >

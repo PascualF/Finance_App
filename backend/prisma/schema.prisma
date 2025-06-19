@@ -14,19 +14,32 @@ generator client {
 }
 
 model Transaction {
-  id        Int      @id @default(autoincrement())
-  title     String
-  amount    Float
-  category  String
-  type      String
-  createdAt DateTime @default(now())
-  userId    Int?
-  user      User?     @relation(fields: [userId], references: [id])
+  id              Int           @id @default(autoincrement())
+  title           String
+  amount          Float
+  category        String
+  type            String
+  createdAt       DateTime      @default(now())
+  transactionDate DateTime?
+  userId          Int?
+  user            User?         @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  email       String        @unique
-  password    String
-  transaction Transaction[]
+  id              Int           @id @default(autoincrement())
+  email           String        @unique
+  password        String
+  transaction     Transaction[]
+  goals           Goals[]
+}
+
+model Goals {
+  id              Int           @id @default(autoincrement())
+  title           String
+  targetAmount    Float
+  currentAmount   Float
+  dueDate         DateTime
+  userId          Int?
+  user            User?         @relation(fields: [userId], references: [id])
+  createdAt       DateTime      @default(now())
 }

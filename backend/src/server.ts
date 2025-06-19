@@ -13,7 +13,7 @@ const saltRounds = 10; // Added to the .env file and keep it secretier
 
 // Middleware
 // Check for adjusting Frontend?? Saw it somwhere but can't find again
-app.use(cors({ origin: 'http://localhost:5173', credentials: true})) 
+app.use(cors({ origin: '*', credentials: true})) 
 app.use(express.json());
 
 // Auth middleware to verify JWT tokens
@@ -59,10 +59,11 @@ interface TransactionInput {
   amount: number;
   category: string;
   type: string;
+  transactionDate: string; // ISO date string
 }
 
 app.post('/api/transactions', authenticateToken, async (req: AuthRequest, res: Response) => {
-  const { title, amount, category, type}: TransactionInput = req.body.transaction
+  const { title, amount, category, type, transactionDate}: TransactionInput = req.body.transaction
   try {
     const transaction = await prisma.transaction.create({
     data: {
@@ -70,7 +71,8 @@ app.post('/api/transactions', authenticateToken, async (req: AuthRequest, res: R
       amount: amount,
       category: category,
       type: type,
-      userId: req.userId
+      userId: req.userId,
+      transactionDate: new Date(transactionDate) // Convert to Date object,
     }
   })
 

@@ -11,7 +11,8 @@ function Form({onAddTransaction} : FormProps) {
         title: '',
         amount: '',
         category: '',
-        type: 'Expense'
+        type: 'Expense',
+        transactionDate: new Date().toISOString().split('T')[0] // Default to today's date
     })
 
     const [errors, setErrors] = useState({
@@ -43,6 +44,8 @@ function Form({onAddTransaction} : FormProps) {
         const hasErrors = Object.values(newErrors).some(error => error); 
         if(hasErrors) return
 
+        console.log('Submitting transaction:', state)
+
         onAddTransaction({
             ...state,
             amount: Number(state.amount) // if no erros, than convert to number
@@ -53,18 +56,19 @@ function Form({onAddTransaction} : FormProps) {
             title: '',
             amount: '',
             category: '',
-            type: 'Expense'
+            type: 'Expense',
+            transactionDate: new Date().toISOString().split('T')[0] // Reset to today's date
         })
 
         setErrors({ 
             title: '', 
             amount: '', 
-            category: '' 
+            category: ''
         });
     }
 
     return (
-        <div>
+        <div className="border border-black p-4 m-2 rounded-lg bg-blue-100 text-black">
             <form onSubmit={handleSubmit}>
                 <label className="text-black"> 
                     Transaction
@@ -107,6 +111,15 @@ function Form({onAddTransaction} : FormProps) {
                         <option value="Income">Income</option>
                         <option value="Expense">Expense</option>
                     </select>
+                </label>
+                <label>
+                    <input
+                        type="date"
+                        name="transactionDate"
+                        value={state.transactionDate}
+                        className="text-black"
+                        onChange={handleChange}
+                    />
                 </label>
                 <button 
                     type='submit'
