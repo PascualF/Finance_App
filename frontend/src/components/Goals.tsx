@@ -52,8 +52,8 @@ export default function Goals() {
                                         data={dataFill} 
                                         dataKey="value" 
                                         nameKey="name" 
-                                        cx="50%" 
-                                        cy="50%" 
+                                        cx="50%"
+                                        cy="50%"
                                         outerRadius={30} 
                                         fill="#82ca9d" 
                                         endAngle={180} 

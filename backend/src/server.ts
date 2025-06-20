@@ -2,45 +2,22 @@ import express, {Request, Response} from 'express';
 import { PrismaClient } from '@prisma/client';
 import cors from 'cors'
 const port = process.env.PORT || 4000;
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import authRoutes from './routes/authRoutes'; // Importing auth routes
+import { authenticateToken } from './middleware/authMiddleware'; // Importing auth middleware
+import { AuthRequest } from './middleware/authMiddleware';
 
 const app = express();
+
+// Erase start
 const prisma = new PrismaClient()
-const JWT_SECRET = 'my_secret_key'; // Added to the .env file and keep it secretier
-const JWT_EXPIRATION = '1d'; // Added to the .env file and keep it secretier
-const saltRounds = 10; // Added to the .env file and keep it secretier
+// Erase end
 
 // Middleware
-// Check for adjusting Frontend?? Saw it somwhere but can't find again
 app.use(cors({ origin: '*', credentials: true})) 
 app.use(express.json());
 
-// Auth middleware to verify JWT tokens
-interface AuthRequest extends Request {
-  userId?: number
-}
 
-// Auth token JWT - middleware
-const authenticateToken = (req: AuthRequest, res: Response, next: Function) => {
-  console.log(req.headers.authorization)
-  const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(' ')[1]
-
-  if(!token) {
-    res.status(401).json({error : 'Access token required'})
-    return 
-  }
-
-  jwt.verify(token, JWT_SECRET, (err: any, decoded: any) => {
-    if(err) {
-      return res.status(403).json({error: 'Invalid or expired token'})
-    }
-    req.userId = decoded.userId;
-    next()
-  })
-}
-
+// Handle transactions routes.
 app.get('/api/transactions', authenticateToken, async (req: AuthRequest, res: Response) => {
   try {
     const response = await prisma.transaction.findMany({
@@ -53,7 +30,7 @@ app.get('/api/transactions', authenticateToken, async (req: AuthRequest, res: Re
   }
 });
 
-// TS interface transaction inpu type
+// TS interface transaction input type
 interface TransactionInput {
   title: string;
   amount: number;
@@ -98,74 +75,13 @@ app.delete('/api/transactions/:id', authenticateToken, async (req: AuthRequest, 
   }
 })
 
-// Login and Signup routes
-app.post('/api/signup', async (req: Request, res: Response) => {
-  try{
-    const { email, password} = req.body;
-    const existingUser = await prisma.user.findUnique({ 
-      where: { email }
-    });
+// Handle file upload CSV...
 
-    if(existingUser) {
-      res.status(400).json({error: "User already exists"});
-      return 
-    }
+// Login and Signup routes start here
+app.use('/api', authRoutes)
+// app.use('/api', transactionRoutes);
 
-    // Hash the password
-    const hashPassword = await bcrypt.hash(password, saltRounds);
-    // Create a new user
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        password: hashPassword
-      }
-    })
-
-    const token = jwt.sign({ userId: newUser.id }, JWT_SECRET, { expiresIn: JWT_EXPIRATION });
-
-    res.status(201).json({
-      userId: newUser.id, 
-      email: newUser.email,
-      token
-    });
-
-  } catch (error) {
-    console.error("Error during signup:", error);
-    res.status(500).json({error: "Internal server error"});
-  }
-})
-
-app.post('/api/login', async (req: Request, res: Response) => {
-  try{
-    const { email, password } = req.body;
-
-    let existingUser= await prisma.user.findUnique({ where: { email } });
-    if(!existingUser) {
-        res.status(404).json({error: "User not found"})
-        return 
-    }
-
-    const isValidPassword = await bcrypt.compare(password, existingUser.password);
-    if(!isValidPassword) {
-      res.status(404).json({error: "Invalid password"});
-      return 
-    }
-
-    // Generate JWT token
-    const token = jwt.sign({ userId: existingUser.id }, JWT_SECRET, { expiresIn: JWT_EXPIRATION });
-
-    console.log(token)
-
-    res.json({
-      userId: existingUser.id,
-      email: existingUser.email,
-      token})
-  } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({error: "Internal server error"});
-  }
-})
-
+// Listening on the port
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
