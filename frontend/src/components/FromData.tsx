@@ -8,7 +8,16 @@ export default function UploadCSV(){
         const selectedFile = e.target.files?.[0];
         if (selectedFile) { // Check if a file is selected, meaning the user has chosen a file
             setFile(selectedFile);
+
+            const fileReader = new FileReader()
+            fileReader.onload = () => {
+                const fileContent = fileReader.result as string;
+                console.log(fileContent)
+            }
+            fileReader.readAsText(selectedFile)
         }
+
+        
     }
 
     const handleUpload = async () => {
@@ -18,13 +27,13 @@ export default function UploadCSV(){
         }
 
         const formData = new FormData();
-        formData.append("csv", file);
+        formData.append("fileCSV", file);
 
         try {
             const res = await fetch("http://localhost:4000/api/upload", {
                 method: "POST",
                 headers: { 
-                    'Authorization': `Bearer ${token}` 
+                    'Authorization': `Bearer ${token}`
                 },
                 body: formData,
             })
@@ -44,7 +53,7 @@ export default function UploadCSV(){
 
     return (
         <div>
-            <input type='file' accept=".csv" onChange={handleFileChange}/>
+            <input type='file' name='fileCSV' accept=".csv" onChange={handleFileChange}/>
             <button onClick={handleUpload}>Upload CSV</button>
         </div>
     )

@@ -58,6 +58,7 @@ function Form({onAddTransaction} : FormProps) {
             category: '',
             type: 'Expense',
             transactionDate: new Date().toISOString().split('T')[0] // Reset to today's date
+            // the userID here
         })
 
         setErrors({ 

@@ -2,6 +2,7 @@ import "swiper/swiper-bundle.css"
 import { PieChart, Pie, Cell } from "recharts"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules';
+import { Link } from "react-router";
 
 
 interface Data {
@@ -29,7 +30,7 @@ export default function Goals() {
         <div className="border-black border text-black h-full">
             <div className="flex space-around">
                 <h2 className="text-xl font-semibold mb-4">Your Goals</h2>
-                <p>{'Link to Goals >>'}</p>
+                <Link to={"/goals"}>{'Link to Goals >>'}</Link>
             </div>
             <Swiper
                 className='!min-h-[200px]'
