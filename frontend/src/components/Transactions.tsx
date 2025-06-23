@@ -2,7 +2,7 @@ import {Trash2} from 'lucide-react'
 import Form from './Form'
 import { useTransactions } from '../hooks/useTransactions'
 import {format} from 'date-fns'
-import UploadCSV from './FromData'
+import FormDataCSV from './FromDataCSV'
 
 export interface Transactions {
   id: number,
@@ -31,7 +31,7 @@ export default function Transactions() {
     return (
         <div>
             {transactions.map(transaction => (
-                <div key={transaction.id} className="flex flex-row justify-between items-center bg-blue-100 text-black p-4 mb-2 rounded">
+                <div key={transaction.id} className="flex flex-row justify-between items-center bg-blue-100 text-black p-2 mb-1 rounded">
                     <p>{transaction.title}</p>
                     <p>
                         {transaction.type === 'Expense' ? '-' : '+'}
@@ -46,8 +46,8 @@ export default function Transactions() {
                 )
             )}
             <Form onAddTransaction={handleAdd}/>
-            <div>
-                <UploadCSV />
+            <div className='flex items-center justify-center mt-4'>
+                <FormDataCSV />
             </div>
         </div>
     )

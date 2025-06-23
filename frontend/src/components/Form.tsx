@@ -122,7 +122,8 @@ function Form({onAddTransaction} : FormProps) {
                         onChange={handleChange}
                     />
                 </label>
-                <button 
+                <button
+                    className="text-white" 
                     type='submit'
                 >
                     Add income/expense

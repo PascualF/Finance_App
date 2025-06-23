@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { Response } from "express";
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 import { AuthRequest } from "../middleware/authMiddleware";
 

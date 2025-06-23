@@ -23,6 +23,8 @@ model Transaction {
   transactionDate DateTime?
   userId          Int?
   user            User?         @relation(fields: [userId], references: [id])
+
+  @@unique([title, amount, transactionDate, userId])
 }
 
 model User {

@@ -1,0 +1,33 @@
+date,description,amount,type,category
+2025-06-01,Salary June,2500.0,income,salary
+2025-06-02,Coffee at Starbucks,-4.5,expense,food
+2025-06-02,Grocery Lidl,-52.3,expense,groceries
+2025-06-03,Transfer from Savings,400.0,income,transfer
+2025-06-03,Burger King,-9.99,expense,food
+2025-06-04,Spotify Subscription,-9.99,expense,entertainment
+2025-06-05,Freelance Web Project,850.0,income,freelance
+2025-06-06,Movie Theater,-12.0,expense,entertainment
+2025-06-07,Electricity Bill,-76.25,expense,utilities
+2025-06-08,Gym Membership,-35.0,expense,health
+2025-06-09,Grocery Carrefour,-63.12,expense,groceries
+2025-06-10,Uber Ride,-17.8,expense,transport
+2025-06-11,Online Course Payment,-89.0,expense,education
+2025-06-12,Client Invoice Payment,1200.0,income,freelance
+2025-06-13,Cinema Date,-22.0,expense,entertainment
+2025-06-14,Fast Food Lunch,-8.5,expense,food
+2025-06-15,Internet Bill,-45.99,expense,utilities
+2025-06-16,Book Purchase,-24.0,expense,education
+2025-06-17,Birthday Gift,-30.0,expense,shopping
+2025-06-18,Stock Dividend,150.0,income,investment
+2025-06-19,Bus Monthly Pass,-55.0,expense,transport
+2025-06-20,Water Bill,-32.75,expense,utilities
+2025-06-21,Side Hustle Design Gig,500.0,income,freelance
+2025-06-22,Concert Ticket,-60.0,expense,entertainment
+2025-06-23,Coffee with Friend,-6.0,expense,food
+2025-06-24,Grocery Market,-48.77,expense,groceries
+2025-06-25,Monthly Bonus,300.0,income,bonus
+2025-06-26,Yoga Class,-20.0,expense,health
+2025-06-27,Taxi Airport,-30.0,expense,transport
+2025-06-28,Netflix,-13.99,expense,entertainment
+2025-06-29,Transfer to Savings,-200.0,expense,transfer
+2025-06-30,Salary Advance,1000.0,income,salary

@@ -14,9 +14,9 @@ export default function Statistics() {
 
     return (
         <div className="p-2 m-1 border border-black text-black rounded-lg h-full">
-            <p>The statiscis</p>
-            <div style={{ width: '100%', height: 300 }}>
-                <ResponsiveContainer width="100%" height="80%">
+            <p>Statistics</p>
+            <div style={{ width: '100%', height: 150 }}>
+                <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={groupByWeekData}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="week" />
