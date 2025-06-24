@@ -2,6 +2,7 @@ import { useState } from "react";
 const token = localStorage.getItem('tokenFinanceApp');
 
 export default function FormDataCSV(){
+
     const [file, setFile] = useState<File | null>(null)
     
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,8 +17,6 @@ export default function FormDataCSV(){
             }
             fileReader.readAsText(selectedFile)
         }
-
-        
     }
 
     const handleUpload = async () => {
@@ -37,7 +36,7 @@ export default function FormDataCSV(){
                 },
                 body: formData,
             })
-
+            
             if (res.ok) {
                 console.log("File uploaded successfully");
                 console.log("Response:", res);
@@ -54,7 +53,7 @@ export default function FormDataCSV(){
     return (
         <div>
             <input type='file' name='fileCSV' accept=".csv" onChange={handleFileChange} className="border m-2 p-3 text-black cursor-pointer"/>
-            <button onClick={handleUpload}>Upload CSV</button>
+            <button onClick={handleUpload}>Upload File CSV</button>
         </div>
     )
 }

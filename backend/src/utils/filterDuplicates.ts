@@ -5,14 +5,14 @@
 import { Transaction, Prisma } from "@prisma/client";
 
 // TransactioInput interface for incoming transaction data
-interface TransactionInput {
+/* interface TransactionInput {
     title: string;
     amount: number;
     transactionDate: string; // ISO date string
     userId: number;
     catagory: string;
     type: string;
-}
+} */
 
 // existingTransaction only 'picks' the necessary fields from Transaction => title, amount and transactionDate
 export const filterDuplicates =  (

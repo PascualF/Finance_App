@@ -1,25 +1,29 @@
 import {Link} from 'react-router-dom';
 
 export default function Sidebar() {
+    
     return (
-        <div className=''>
-            <h1>Sidebar</h1>
+        <aside className='w-64 bg-gray-900 text-white h-screen p-6 flex flex-col justify-between'>
             <div>
-                <Link to="/">HomePage</Link>
+                <h2 className='text-xl font-bold mb-6'>Finance App</h2>
+                <nav className='space-y-2 flex flex-col'>
+                    <Link to="/">Dashboard</Link>
+                    <Link to="/transactions">Transactions</Link>
+                    <div className='text-gray-400 mt-4 text-sm tracking-wider'>FEATURES</div>
+                    <Link to="/investments">Investments</Link>
+                    <Link to="/bills">Bills</Link>
+                    <Link to="/expenses">Expenses</Link>
+                    <Link to="/goals">Goals</Link>
+                    <Link to="/splitwise">Splitwise</Link>
+                </nav>
             </div>
-            <div>
-                <Link to="/transactions">Transactions</Link>
-            </div>
-            <div>Investment</div>
-            <div>Bills</div>
-            <div>Expense</div>
-            <div>Goals</div>
-            <div>Settings</div>
-            <div>SplitWise?</div>
 
             <div>
-                <p>View Profile?</p>
+                <hr className='my-4 border-gray-700'/>
+                <Link to="/profile" className='text-gray-400 hover:text-white text-sm'>View Profile</Link>
+                <Link to="/settings" className='text-gray-400 hover:text-white text-sm ml-4'>Settings</Link>
             </div>
-        </div>
+            
+        </aside>
     )
 }

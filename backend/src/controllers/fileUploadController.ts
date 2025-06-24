@@ -6,19 +6,29 @@ import fs from 'fs'
 import parseCsv from "../utils/parseCsv";
 import { filterDuplicates } from "../utils/filterDuplicates";
 
+interface CsvRecord {
+    date: string;
+    description: string;
+    amount: string;
+    type: string;
+    category: string;
+}
+
 export const fileUpload = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
         const userId = req.userId;
-        const filePath = req.file?.path
+        const filePath = req.file?.path;
         if(!filePath) {
             res.status(400).json({msg:'No file uploaded...'})
             return;
         }
 
-        const fileData = fs.readFileSync(filePath, 'utf-8')
+        const fileData = fs.readFileSync(filePath, 'utf-8') // Will get the data.
         console.log(fileData)
         
-        let csvData: any[] = await parseCsv(fileData)
+        let resultParsedData = await parseCsv<CsvRecord>(fileData)
+        let csvData = resultParsedData.data
+        console.log(csvData)
         if (!csvData || csvData.length === 0) {
             res.status(400).json({msg:'No valid CSV data found...'})
             return;
@@ -26,7 +36,7 @@ export const fileUpload = async (req: AuthRequest, res: Response): Promise<void>
 
         let csvDataTransformed: any[] = csvData.map(record => ({
             title: record.description,
-            amount: parseFloat(record.amount.slice(1)),
+            amount: parseFloat(record.amount),
             category: record.category,
             type: record.type,
             transactionDate: new Date(record.date).toISOString(),
@@ -52,7 +62,6 @@ export const fileUpload = async (req: AuthRequest, res: Response): Promise<void>
                 res.status(500).json({msg:'Error inserting CSV data into database'})
                 return ;
         })
-        
         res.json(result)
         
     } catch (error){

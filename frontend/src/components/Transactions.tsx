@@ -34,8 +34,9 @@ export default function Transactions() {
                 <div key={transaction.id} className="flex flex-row justify-between items-center bg-blue-100 text-black p-2 mb-1 rounded">
                     <p>{transaction.title}</p>
                     <p>
-                        {transaction.type === 'Expense' ? '-' : '+'}
+                       {transaction.type === 'expense' ? '-' : '+'}{transaction.amount}
                     </p>
+                    <p>{transaction.amount}</p>
                     <p>{format(new Date(transaction.transactionDate), "MMM-dd")}</p>
                     <button style={{color: 'white'}}
                             onClick={() => handleDelete(transaction)} 

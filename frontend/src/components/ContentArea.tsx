@@ -10,22 +10,22 @@ export default function ContentArea() {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 p-4"> 
         {/* Making the grid responsive */}
-            <div className="col-span-1 xl:col-span-1">
+            <div className="col-span-1">
                 <TotalBalance />
             </div>
-            <div className="col-span-1 xl:col-span-1">
+            <div className="col-span-1">
                 <Goals />
             </div>
-            <div>
+            <div className="col-span-1">
                 <UpcomingBills />   
             </div>
-            <div className="col-start-1 col-end-2 row-start-2 row-end-4">
+            <div className="col-span-1 row-span-2 md:col-span-2 xl:col-span-1">
                 <RecentTransactions  />
             </div>
-            <div className="col-start-2 col-end-4">
+            <div className="col-span-2">
                 <Statistics />
             </div>
-            <div className="col-start-2 col-end-4">
+            <div className="col-span-2">
                 <ExpensesBreakdown />
             </div>
         </div>

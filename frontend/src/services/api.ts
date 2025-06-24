@@ -3,7 +3,6 @@ import { Transaction } from "../context/types/TransactionType"
 const token = localStorage.getItem('tokenFinanceApp')
 
 export const getTransactions = async () => {
-    /* console.log(token) */
     const response = await fetch(`${API}/api/transactions`, {
         method: "GET",
         headers: { 

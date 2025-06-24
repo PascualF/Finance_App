@@ -6,7 +6,12 @@ import { AuthRequest } from "../middleware/authMiddleware";
 export const getAllTransactions = async (req: AuthRequest, res: Response) => {
   try {
     const response = await prisma.transaction.findMany({
-      where: { userId: req.userId}
+      where: { 
+        userId: req.userId
+      },
+      orderBy: {
+        transactionDate: 'desc'
+      }
     }) // userID will be added here
     res.json(response)
   } catch (error) {
