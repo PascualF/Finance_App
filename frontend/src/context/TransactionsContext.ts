@@ -6,7 +6,8 @@ interface TransactionsContextType {
     setTransactions: React.Dispatch<React.SetStateAction<Transaction[]>>;
     isLoading: boolean;
     add: (data: Omit<Transaction, "id">) => Promise<void>;
-    remove: (data: Transaction) => Promise<void>
+    remove: (data: Transaction) => Promise<void>;
+    fetchTransactions: () => Promise<void>;
 }
 
 // This creates the context

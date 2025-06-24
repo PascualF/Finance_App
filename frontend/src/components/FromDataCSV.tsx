@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useTransactions } from "../hooks/useTransactions";
 const token = localStorage.getItem('tokenFinanceApp');
 
 export default function FormDataCSV(){
 
     const [file, setFile] = useState<File | null>(null)
+    const { fetchTransactions, isLoading} =  useTransactions()
     
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files?.[0];
@@ -27,7 +29,7 @@ export default function FormDataCSV(){
 
         const formData = new FormData();
         formData.append("fileCSV", file);
-
+        
         try {
             const res = await fetch("http://localhost:4000/api/upload", {
                 method: "POST",
@@ -40,6 +42,7 @@ export default function FormDataCSV(){
             if (res.ok) {
                 console.log("File uploaded successfully");
                 console.log("Response:", res);
+                fetchTransactions()
             } else {
                 const errorMsg = await res.text()
                 alert("Upload failed: " + errorMsg);
@@ -53,7 +56,7 @@ export default function FormDataCSV(){
     return (
         <div>
             <input type='file' name='fileCSV' accept=".csv" onChange={handleFileChange} className="border m-2 p-3 text-black cursor-pointer"/>
-            <button onClick={handleUpload}>Upload File CSV</button>
+            <button onClick={handleUpload} disabled={isLoading}>Upload File CSV</button>
         </div>
     )
 }

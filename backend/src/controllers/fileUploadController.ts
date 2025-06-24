@@ -36,7 +36,9 @@ export const fileUpload = async (req: AuthRequest, res: Response): Promise<void>
 
         let csvDataTransformed: any[] = csvData.map(record => ({
             title: record.description,
-            amount: parseFloat(record.amount),
+            amount: parseFloat(
+                record.amount[0] === '-' ? record.amount.slice(1) : record.amount
+            ),
             category: record.category,
             type: record.type,
             transactionDate: new Date(record.date).toISOString(),

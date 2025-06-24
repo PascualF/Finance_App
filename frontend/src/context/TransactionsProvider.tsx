@@ -10,18 +10,19 @@ export function TransactionsProvider({children}:{children: React.ReactNode}) {
 
     // Fetching data
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getTransactions()
-                setTransactions(data)
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        fetchData()
+        fetchTransactions()
     }, [])
+
+    const fetchTransactions = async() => {
+        try {
+            const data = await getTransactions()
+            setTransactions(data)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     const add = async (data: Omit<Transaction, "id">) => {
         try{
@@ -33,7 +34,8 @@ export function TransactionsProvider({children}:{children: React.ReactNode}) {
     } 
 
     const remove = async (data: Transaction) => {
-         try{
+        
+        try{
             await deleteTransaction(data.id)
             setTransactions(prev => prev.filter(t => t.id !== data.id))
         } catch (error) {
@@ -46,7 +48,8 @@ export function TransactionsProvider({children}:{children: React.ReactNode}) {
         setTransactions,
         isLoading,
         add,
-        remove
+        remove,
+        fetchTransactions
     }
 
     return (
