@@ -54,9 +54,21 @@ export default function FormDataCSV(){
     }
 
     return (
-        <div>
-            <input type='file' name='fileCSV' accept=".csv" onChange={handleFileChange} className="border m-2 p-3 text-black cursor-pointer"/>
-            <button onClick={handleUpload} disabled={isLoading}>Upload File CSV</button>
+        <div className="flex justify-between items-center bg-blue-100 text-black p-2 mb-1 rounded-xl border border-black">
+            <input 
+                type='file' 
+                name='fileCSV' 
+                accept=".csv" 
+                placeholder="Choose CSV file"
+                onChange={handleFileChange} 
+                className="border m-2 p-3 text-black cursor-pointer bg-white"
+            />
+            <button 
+                onClick={handleUpload} 
+                disabled={isLoading}
+                className="text-white"
+            >Upload File CSV
+            </button>
         </div>
     )
 }

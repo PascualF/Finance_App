@@ -13,20 +13,24 @@ export default function Statistics() {
 
 
     return (
-        <div className="p-2 m-1 border border-black text-black rounded-lg h-full">
-            <p>Statistics</p>
-            <div style={{ width: '100%', height: 150 }}>
+        <div className="m-1 text-black rounded-lg h-full">
+            <p className="text-lg font-semibold text-gray-800 mb-4">Weekly Income vs Expenses</p>
+            <div style={{ width: '100%', height: 250 }}>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={groupByWeekData}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="week" />
-                        <YAxis />
-                        <Tooltip />
+                        <XAxis dataKey="week" tick={{fontSize: 12}}/>
+                        <YAxis tick={{fontSize: 12}}/>
+                        <Tooltip formatter={(value: number) => `€${value.toFixed(2)}`} />
                         <Legend />
-                        <Bar dataKey="income" fill="#8884d8" />
-                        <Bar dataKey="expenses" fill="#82ca9d" />
+                        <Bar dataKey="income" fill="#4f46e5" name="Income"/>
+                        <Bar dataKey="expenses" fill="#f87171" name="Expenses"/>
                     </BarChart>
                 </ResponsiveContainer>
+            </div>
+            <div>
+                <p>Total Income??</p>
+                <p>Total Expenses??</p>
             </div>
         </div>
     )

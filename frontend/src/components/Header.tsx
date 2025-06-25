@@ -51,7 +51,7 @@ export default function Header({ currentRoute }: HeaderProps) {
 
 
     return (
-        <header className="flex justify-between items-center bg-gradient-to-r from-slate-800 to-gray-700 text-white py-4 px-6 shadow-md">
+        <header className="flex justify-between items-center bg-gradient-to-r from-slate-800 to-gray-700 text-white py-2 px-6 shadow-md">
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">{headerTitle}</h1>
                 <p className="mt-1 text-sm text-width/80">{rightContent}</p>

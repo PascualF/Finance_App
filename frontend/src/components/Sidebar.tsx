@@ -1,9 +1,10 @@
 import {Link} from 'react-router-dom';
+import Footer from './Footer'
 
 export default function Sidebar() {
     
     return (
-        <aside className='w-64 bg-gray-900 text-white h-screen p-6 flex flex-col justify-between'>
+        <aside className='w-64 bg-gray-900 text-white p-6 flex flex-col justify-between overflow-y-auto'>
             <div>
                 <h2 className='text-xl font-bold mb-6'>Finance App</h2>
                 <nav className='space-y-2 flex flex-col'>
@@ -18,12 +19,13 @@ export default function Sidebar() {
                 </nav>
             </div>
 
-            <div>
+            <div className='text-center'>
                 <hr className='my-4 border-gray-700'/>
                 <Link to="/profile" className='text-gray-400 hover:text-white text-sm'>View Profile</Link>
                 <Link to="/settings" className='text-gray-400 hover:text-white text-sm ml-4'>Settings</Link>
+                <hr className='my-4 border-gray-700'/>
+                <Footer />
             </div>
-            
         </aside>
     )
 }

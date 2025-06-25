@@ -69,15 +69,14 @@ function Form({onAddTransaction} : FormProps) {
     }
 
     return (
-        <div className="border border-black p-4 m-2 rounded-lg bg-blue-100 text-black">
+        <div className="border border-black p-4 mt-2 rounded-xl bg-blue-100 text-black">
             <form onSubmit={handleSubmit}>
                 <label className="text-black"> 
-                    Transaction
                     <input
                         type="text"
                         name="title"
                         placeholder={errors.title ? errors.title : 'Transaction' }
-                        className="text-black"
+                        className="w-1/4 text-black bg-gray-100 rounded-md mr-2"
                         value={state.title}
                         onChange={handleChange}
                     />
@@ -88,7 +87,7 @@ function Form({onAddTransaction} : FormProps) {
                         name="amount"
                         value={state.amount}
                         placeholder={errors.amount ? errors.amount : '0' }
-                        className="text-black"
+                        className="w-1/6 text-black bg-gray-100 rounded-md mr-2"
                         onChange={handleChange}
                     />
                 </label>
@@ -98,7 +97,7 @@ function Form({onAddTransaction} : FormProps) {
                         name="category"
                         value={state.category}
                         placeholder={errors.amount ? errors.amount : 'Category' }
-                        className="text-black"
+                        className="w-1/9 text-black bg-gray-100 rounded-md mr-2"
                         onChange={handleChange}
                     />
                 </label>
@@ -107,7 +106,7 @@ function Form({onAddTransaction} : FormProps) {
                         name="type"
                         value={state.type}
                         onChange={handleChange}
-                        className="text-black"
+                        className="w-1/7 text-black bg-gray-100 rounded-md mr-2"
                     >
                         <option value="Income">Income</option>
                         <option value="Expense">Expense</option>
@@ -118,12 +117,12 @@ function Form({onAddTransaction} : FormProps) {
                         type="date"
                         name="transactionDate"
                         value={state.transactionDate}
-                        className="text-black"
+                        className="w-1/8 text-black bg-gray-100 rounded-md mr-2"
                         onChange={handleChange}
                     />
                 </label>
                 <button
-                    className="text-white" 
+                    className="w-1/6 text-white" 
                     type='submit'
                 >
                     Add income/expense

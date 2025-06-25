@@ -9,7 +9,7 @@ export default function RecentTransactions() {
     if(isLoading) return <p>Loading...</p>
 
     if(transactions.length === 0 || !transactions) return <p>No transactions available</p>
-    const lastFiveTransactions = transactions.slice(-8); // extract the last 8 transactions
+    const lastFiveTransactions = transactions.slice(-11); // extract the last 8 transactions
 
     return (
         <div className="bg-white rounded-lg shadow-md p-4">

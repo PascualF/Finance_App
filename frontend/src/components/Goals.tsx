@@ -3,6 +3,7 @@ import { PieChart, Pie, Cell } from "recharts"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules';
 import { Link } from "react-router";
+import '../styles/Goals.css'
 
 
 interface Data {
@@ -27,10 +28,10 @@ export default function Goals() {
     ]
 
     return (
-        <div className="border-black border text-black h-full">
-            <div className="flex space-around">
-                <h2 className="text-xl font-semibold mb-4">Your Goals</h2>
-                <Link to={"/goals"}>{'Link to Goals >>'}</Link>
+        <div className="text-black h-full">
+            <div className="flex justify-between items-center mb-4 m-1">
+                <h2 className="text-lg font-semibold text-gray-800">Your Goals</h2>
+                <Link to="/goals" className="text-blue-600 hover:underline text-sm">View all →</Link>
             </div>
             <Swiper
                 className='!min-h-[200px]'
@@ -42,22 +43,22 @@ export default function Goals() {
             >
                 {goals.map((goal) => (
                     <SwiperSlide key={goal.goalId}>
-                        <div className="p-4 bg-white rounded-2xl shadow-md h-full flex justify-around h-full">
-                            <div className="mb-4">
-                                <p className="text-lg font-semibold mb-1">{goal.goalId}</p>
+                        <div className=" bg-white rounded-2xl shadow-md h-full flex flex-col text-center items-center justify-between">
+                            <div className="mr-4 mt-6">
+                                {/* <p className="text-lg font-semibold mb-1">{goal.goalId}</p> */}
                                 <p className="text-gray-800">{goal.goalTitle}</p>
                             </div>
-                            <div className="">
+                            <div className="mt-5">
                                 <PieChart width={70} height={70}>
                                     <Pie  
                                         data={dataFill} 
                                         dataKey="value" 
                                         nameKey="name" 
-                                        cx="50%"
-                                        cy="50%"
+                                        cx="50%" cy="50%"
                                         outerRadius={30} 
                                         fill="#82ca9d" 
-                                        endAngle={180} 
+                                        endAngle={180}
+                                        label
                                     >
                                         {dataFill.map((_entry, index) => (
                                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
@@ -65,7 +66,9 @@ export default function Goals() {
                                     </Pie>
                                 </PieChart>
                             </div>
+                            <p className="text-sm ">{Math.floor((dataFill[1].value / dataFill[0].value) * 100)}% Complete</p>
                         </div>
+                        
                     </SwiperSlide>
                 ))}
             </Swiper>

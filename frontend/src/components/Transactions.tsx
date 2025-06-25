@@ -1,9 +1,8 @@
-import {Trash2} from 'lucide-react'
+import {Trash2, Pen} from 'lucide-react'
 import Form from './Form'
 import { useTransactions } from '../hooks/useTransactions'
 import {format} from 'date-fns'
 import FormDataCSV from './FromDataCSV'
-import { confirmAlert } from 'react-confirm-alert'
 
 export interface Transactions {
   id: number,
@@ -25,20 +24,6 @@ export default function Transactions() {
     }
 
     async function handleDelete(data: Transactions) {
-        confirmAlert({
-            title: 'Confirm deletion',
-            message: 'Are you sure you want to delete this transaction?',
-            buttons: [
-                {
-                    label: 'Yes',
-                    onClick: () => alert('Click Yes')
-                },
-                {
-                    label: 'No',
-                    onClick: () => alert('Click No')
-                }
-            ]
-        })
         /* await remove(data) */
         console.log(data)
     }
@@ -46,25 +31,33 @@ export default function Transactions() {
     return (
         <div className='bg-white p-4'>
             <div className='flex justify-between text-black font-semibold rounded-t border-b pb-2'>
-                <span className='w-2/5'>Title</span>
+                <span className='w-2/5 pl-3'>Title</span>
                 <span className='w-1/5'>Amount</span>
                 <span className='w-1/5'>Category</span>
                 <span className='w-1/5'>Date</span>
-                <span className='w-1/5'>Delete</span>
+                <span className='w-1/5'>Modify/Delete</span>
             </div>
             {transactions.map(transaction => (
                 <div key={transaction.id} className="flex justify-between items-center bg-blue-100 text-black p-1 mb-0.5 rounded">
-                    <p>{transaction.title}</p>
-                    <p>
-                       {transaction.type === 'expense' ? '-' : '+'}{transaction.amount}
-                    </p>
-                    <span>{transaction.category}</span>
-                    <p>{format(new Date(transaction.transactionDate), "MMM-dd")}</p>
-                    <button style={{color: 'white'}}
+                    <span className='w-2/5 pl-2'>{transaction.title}</span>
+                    <span className='w-1/5'>
+                       {transaction.type === 'expense' ? '- ' : '+ '}{transaction.amount} €
+                    </span>
+                    <span className='w-1/5'>{transaction.category.charAt(0).toUpperCase() + transaction.category.slice(1)}</span>
+                    <span className='w-1/5'>{format(new Date(transaction.transactionDate), "dd-MMM-yy")}</span>
+                    <span className='w-1/5'>
+                        <button 
+                            style={{color: 'white'}}
+                        >
+                            <Pen size={13}/>
+                        </button>
+                        <button style={{color: 'white'}}
+                            
                             onClick={() => handleDelete(transaction)} 
                         >
                             <Trash2 size={13}/>
-                    </button>
+                        </button>
+                    </span>
                 </div>
                 )
             )}
