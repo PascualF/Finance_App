@@ -1,10 +1,12 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Footer from './Footer'
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen} : {isOpen : boolean}) {
     
     return (
-        <aside className='w-64 bg-gray-900 text-white p-6 flex flex-col justify-between overflow-y-auto'>
+        /* `fixed top-0 left-0 h-full w-64 bg-gray-900 text-white p-6 z-50 transition-transform transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+         md:relative md:translate-x-0 md:flex` */
+        <aside className={`${isOpen === false && 'hidden fixed'} w-64 bg-gray-900 text-white p-6 md:relative md:flex flex-col justify-between overflow-y-auto`}>
             <div>
                 <h2 className='text-xl font-bold mb-6'>Finance App</h2>
                 <nav className='space-y-2 flex flex-col'>

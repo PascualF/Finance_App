@@ -1,15 +1,24 @@
 import { useTransactions } from "../hooks/useTransactions"
 import { Link } from "react-router"
 import { format } from "date-fns"
+import { useMediaQuery } from "react-responsive"
 
 export default function RecentTransactions() {
 
     const {transactions, isLoading} = useTransactions()
 
+    const smallScreenRecentTransactions = useMediaQuery({ maxWidth: 640})
+    const mediumScreenRecentTransactions = useMediaQuery({ minWidth: 642, maxWidth: 1024})
+
     if(isLoading) return <p>Loading...</p>
 
+    // Define recent transactions by screen.
+    let defaultLimitTransactions = 11;
+    if (smallScreenRecentTransactions) defaultLimitTransactions = 3
+    else if (mediumScreenRecentTransactions) defaultLimitTransactions = 5
+
     if(transactions.length === 0 || !transactions) return <p>No transactions available</p>
-    const lastFiveTransactions = transactions.slice(-11); // extract the last 8 transactions
+    const lastElevenTransactions = transactions.slice(0, defaultLimitTransactions);
 
     return (
         <div className="bg-white rounded-lg shadow-md p-4">
@@ -18,7 +27,7 @@ export default function RecentTransactions() {
                 <Link to="/transactions" className="text-blue-600 hover:underline text-sm">View all →</Link>
             </div>
             <ul className="space-y-2">
-                {lastFiveTransactions.map(transaction => (
+                {lastElevenTransactions.map(transaction => (
                     <li 
                         key={transaction.id} 
                         className="flex justify-between items-center border-b py-2 text-sm text-gray-500"

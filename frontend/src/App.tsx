@@ -6,7 +6,9 @@ import './styles/App.css'
 import { useAuth } from './hooks/useAuth'
 import ContentArea from './components/ContentArea'
 import Transactions from './components/Transactions'
-import Bills from './components/Bills'
+/* import Bills from './components/Bills'
+import ExpensesBreakdown from './components/ExpensesBreakdown' */
+import Goals from './components/Goals'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }){
   const {user, isLoading} = useAuth()
@@ -36,7 +38,9 @@ function App() {
           {/* Nested pages inside layout's Content Area */}
           <Route index element={<ContentArea />} />
           <Route path='/transactions' element={<Transactions />} />
-          <Route path='/upcomingbills' element={<Bills />} />
+{/*           <Route path='/bills' element={<Bills />} />
+          <Route path='/expenses' element={<ExpensesBreakdown />} /> */}
+          <Route path='/goals' element={<Goals />} />
         </Route>
       </Routes>
     </Router>
