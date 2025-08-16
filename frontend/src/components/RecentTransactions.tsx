@@ -13,7 +13,7 @@ export default function RecentTransactions() {
     if(isLoading) return <p>Loading...</p>
 
     // Define recent transactions by screen.
-    let defaultLimitTransactions = 11;
+    let defaultLimitTransactions = 7;
     if (smallScreenRecentTransactions) defaultLimitTransactions = 3
     else if (mediumScreenRecentTransactions) defaultLimitTransactions = 5
 

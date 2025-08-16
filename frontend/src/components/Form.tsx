@@ -17,8 +17,7 @@ function Form({onAddTransaction} : FormProps) {
 
     const [errors, setErrors] = useState({
             title: '',
-            amount: '',
-            category: ''
+            amount: ''
     })
 
     function handleChange(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
@@ -34,8 +33,7 @@ function Form({onAddTransaction} : FormProps) {
 
         const newErrors =  {
             title: state.title ? '' : 'Title is required',
-            amount: state.amount.trim() === '' || isNaN(Number(state.amount)) ? 'Valid amount required' : '',
-            category: state.category? '' : 'Category is required'
+            amount: state.amount.trim() === '' || isNaN(Number(state.amount)) ? 'Valid amount required' : ''
         }
 
         setErrors(newErrors)
@@ -63,8 +61,7 @@ function Form({onAddTransaction} : FormProps) {
 
         setErrors({ 
             title: '', 
-            amount: '', 
-            category: ''
+            amount: ''
         });
     }
 
@@ -92,14 +89,21 @@ function Form({onAddTransaction} : FormProps) {
                     />
                 </label>
                 <label>
-                    <input
-                        type="text"
+                    <select
                         name="category"
                         value={state.category}
-                        placeholder={errors.amount ? errors.amount : 'Category' }
                         className="w-1/9 text-black bg-gray-100 rounded-md mr-2"
                         onChange={handleChange}
-                    />
+                    >
+                        <option value="housing">Housing</option>
+                        <option value="food">Food</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="bills_and_subsciptions">Bills & Subscriptions</option>
+                        <option value="health_wellness">Health & Wellness</option>
+                        <option value="personal_shopping">Personal & Shopping</option>
+                        <option value="entertainement_lifestyle">Entertainment & Lifestyle</option>
+                        <option value="financial">Financial</option>
+                    </select>
                 </label>
                 <label>
                     <select 

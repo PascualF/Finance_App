@@ -26,7 +26,7 @@ export default function ContentArea() {
                 <div className="md:col-span-2 p-4 bg-white shadow rounded-lg shadow-md">
                     <Statistics />
                 </div>
-                <div className="md:col-span-2 p-4 bg-white shadow rounded-lg shadow-md">
+                <div className="md:col-span-3 p-4 bg-white shadow rounded-lg shadow-md">
                     <ExpensesBreakdown mode="dashboard" />
                 </div>
             </div>

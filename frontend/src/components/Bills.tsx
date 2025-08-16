@@ -24,7 +24,7 @@ function DashboardBillsView() {
         <div className="text-black">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold text-gray-800">Upcoming Bills</h2>
-                <Link to="/upcomingbills" className="text-blue-600 hover:underline text-sm">View all →</Link>
+                <Link to="/bills" className="text-blue-600 hover:underline text-sm">View all →</Link>
             </div>
         </div>
     )

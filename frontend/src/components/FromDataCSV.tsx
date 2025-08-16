@@ -7,6 +7,8 @@ export default function FormDataCSV(){
     const [file, setFile] = useState<File | null>(null)
     const { fetchTransactions, isLoading} =  useTransactions()
     
+    
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files?.[0];
         if (selectedFile) { // Check if a file is selected, meaning the user has chosen a file
@@ -32,13 +34,13 @@ export default function FormDataCSV(){
         
         try {
             const res = await fetch("http://localhost:4000/api/upload", {
+                
                 method: "POST",
                 headers: { 
                     'Authorization': `Bearer ${token}`
                 },
                 body: formData,
             })
-            
             if (res.ok) {
                 console.log("File uploaded successfully");
                 console.log("Response:", res);
@@ -54,7 +56,7 @@ export default function FormDataCSV(){
     }
 
     return (
-        <div className="flex justify-between items-center bg-blue-100 text-black p-2 mb-1 rounded-xl border border-black">
+        <div className="flex flex-col md:flex-row justify-between items-center bg-blue-100 text-black p-2 mb-1 rounded-xl border border-black">
             <input 
                 type='file' 
                 name='fileCSV' 

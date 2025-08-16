@@ -2,9 +2,11 @@ import express, {Request, Response} from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const prisma = new PrismaClient()
-const JWT_SECRET = 'my_secret_key'; // Added to the .env file and keep it secretier
+const JWT_SECRET: string | undefined = process.env.JWT_SECRET ?? "my_secret_key"; // Added to the .env file and keep it secretier
 const JWT_EXPIRATION = '1d'; // Added to the .env file and keep it secretier
 const saltRounds = 10; // Added to the .env file and keep it secretier
 
@@ -29,6 +31,10 @@ export const signup = async(req: Request, res: Response) => {
         password: hashPassword
       }
     })
+
+    if(!JWT_SECRET){
+      throw new Error('JWT_SECRET is not defined')
+    }
 
     const token = jwt.sign({ userId: newUser.id }, JWT_SECRET, { expiresIn: JWT_EXPIRATION });
 
@@ -58,6 +64,10 @@ export const login = async (req: Request, res: Response) => {
     if(!isValidPassword) {
       res.status(404).json({error: "Invalid password"});
       return 
+    }
+
+    if(!JWT_SECRET){
+      throw new Error('JWT_SECRET is not defined')
     }
 
     // Generate JWT token

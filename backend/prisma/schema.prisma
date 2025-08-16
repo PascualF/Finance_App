@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -33,6 +33,7 @@ model User {
   password        String
   transaction     Transaction[]
   goals           Goals[]
+  investments     Investments[]
 }
 
 model Goals {
@@ -45,3 +46,13 @@ model Goals {
   user            User?         @relation(fields: [userId], references: [id])
   createdAt       DateTime      @default(now())
 }
+
+model Investments {
+  id              Int           @id @default(autoincrement())
+  symbol          String        @unique
+  date            DateTime      @db.Date
+  price           Float
+  userId          Int?
+  user            User?         @relation(fields: [userId], references: [id])
+}
+

@@ -36,7 +36,7 @@ export const addTransaction = async (req: AuthRequest, res: Response) => {
       title: title,
       amount: amount,
       category: category,
-      type: type,
+      type: type.toLowerCase(),
       userId: req.userId,
       transactionDate: new Date(transactionDate) // Convert to Date object,
     }

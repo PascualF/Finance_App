@@ -7,10 +7,13 @@ export default function Statistics() {
     const {transactions, isLoading} = useTransactions()
 
     if (isLoading) return <div>Loading...</div>
-    if (transactions.length === 0 || !transactions) return <div>No transaction data available</div>
+    if (transactions.length === 0 || !transactions) {
+        return (
+            <div className="text-black">No transaction data available</div>
+        )
+    } 
 
     const groupByWeekData = groupByWeek(transactions);
-
 
     return (
         <div className="m-1 text-black rounded-lg h-full">
